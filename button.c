@@ -1,4 +1,5 @@
 #include "button.h"
+
 //Creates a button
 Button createButton(int x, int y, int width, int height, Color c, char text[])
 {
@@ -20,10 +21,9 @@ int buttonDraw(Button *a)
 	if (TextLength(a->text) > 0)
 	{
 		int textSize = MeasureText(a->text, MAIN_FONT_SIZE);
-		Vector2 textPosition = {
-			-textSize / 2 + a->rec.x + a->rec.width / 2,
-			-MAIN_FONT_SIZE + a->rec.y + a->rec.height / 2};
-		DrawText(a->text, textPosition.x, textPosition.y, MAIN_FONT_SIZE, BLACK);
+		float x = -textSize / 2 + a->rec.x + a->rec.width / 2;
+		float y = -MAIN_FONT_SIZE + a->rec.y + a->rec.height / 2;
+		DrawText(a->text, x, y, MAIN_FONT_SIZE, BLACK);
 	}
 	else
 	{
