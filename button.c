@@ -1,20 +1,35 @@
 #include "button.h"
-
 //Creates a button
-Button createButton(int x, int y, int width, int height)
+Button createButton(int x, int y, int width, int height, Color c, char text[])
 {
 	Button btn;
 	btn.state = 0;
 	btn.activate = false;
 	Rectangle r = {x, y, width, height};
 	btn.rec = r;
+	btn.c = c;
+	TextCopy(btn.text, text);
 	return btn;
 }
 
 //Called to draw buttons
-int buttonDraw(Button a, Color c)
+//Draws the button text in the middle of the button
+int buttonDraw(Button *a)
 {
-	DrawRectangle(a.rec.x, a.rec.y, a.rec.width, a.rec.height, c);
+	DrawRectangle(a->rec.x, a->rec.y, a->rec.width, a->rec.height, a->c);
+	if (TextLength(a->text) > 0)
+	{
+		int textSize = MeasureText(a->text, MAIN_FONT_SIZE);
+		Vector2 textPosition = {
+			-textSize / 2 + a->rec.x + a->rec.width / 2,
+			-MAIN_FONT_SIZE + a->rec.y + a->rec.height / 2};
+		DrawText(a->text, textPosition.x, textPosition.y, MAIN_FONT_SIZE, BLACK);
+	}
+	else
+	{
+		DrawText("NONE", 0, 0, MAIN_FONT_SIZE, BLACK);
+	}
+
 	return 0;
 }
 
@@ -40,4 +55,6 @@ int buttonUpdate(Button *b, Vector2 mousePosition)
 	}
 	else
 		b->state = 0;
+
+	return 0;
 }
