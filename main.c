@@ -2,16 +2,6 @@
 #include "button.h"
 #include "game.h"
 
-bool gameEnd(Target targets[])
-{
-	for (int i = 0; i < 50; i++)
-	{
-		if (!gameEndOne(&targets[i]))
-			return false;
-	}
-	return true;
-}
-
 int main()
 {
 	// Initialization //////////////////////////////////////////////
@@ -73,6 +63,7 @@ int main()
 
 		//GameLogic
 
+		//Interval Logic
 		if (g.state == 1 && currentSize < maxSize)
 		{
 			timer += 1;
@@ -82,13 +73,14 @@ int main()
 				timer = 0.0f;
 			}
 		}
-
+		//Update In order, with an interval
 		for (int i = 0; i < currentSize; i++)
 		{
 			gameUpdateOne(g.state, &targets[i]);
 		}
 
-		if (gameEnd(targets))
+		//Check for game end
+		if (gameEnd(targets, maxSize))
 		{
 			g.state = 0;
 			g.playNumber++;

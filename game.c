@@ -108,3 +108,13 @@ bool gameEndOne(Target *target)
 {
 	return target->stopped;
 }
+
+bool gameEnd(Target targets[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (!gameEndOne(&targets[i]))
+			return false;
+	}
+	return true;
+}

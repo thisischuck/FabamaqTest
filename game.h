@@ -29,5 +29,6 @@ int gameUpdateOne(int state, Target *target);
 int gameDrawOne(int state, Target *target);
 int gameDrawPause(int state);
 bool gameEndOne(Target *target);
+bool gameEnd(Target targets[], int size);
 
 #endif
