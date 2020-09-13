@@ -14,17 +14,20 @@ typedef struct game
 typedef struct target
 {
 	int radius;
-	Vector2 speed;
+	int weight;
+	float speed;
 	Vector2 position;
 	Color color;
+	bool stopped;
 } Target;
 
 Game createGame();
 
-Target createTarget();
+Target createTarget(int index);
+int resetTarget(Target *target);
 int gameUpdateOne(int state, Target *target);
 int gameDrawOne(int state, Target *target);
 int gameDrawPause(int state);
-bool gameEnd();
+bool gameEndOne(Target *target);
 
 #endif

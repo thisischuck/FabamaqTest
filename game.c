@@ -1,4 +1,5 @@
 #include "game.h"
+#include "stdlib.h"
 
 Game createGame()
 {
@@ -6,28 +7,43 @@ Game createGame()
 	return g;
 }
 
-Target createTarget()
+int resetTarget(Target *target)
+{
+	target->position.y = 0;
+	target->speed = 5;
+	target->stopped = false;
+	return 0;
+}
+
+Target createTarget(int index)
 {
 	Color color = {GetRandomValue(0, 255), GetRandomValue(0, 255), GetRandomValue(0, 255), 255};
-	Vector2 speed = {GetRandomValue(1, 5), GetRandomValue(1, 5)};
-	Vector2 position = {GetRandomValue(155, SCR_WIDTH), GetRandomValue(0, SCR_HEIGHT)};
-	return (Target){10, speed, position, color};
+	float x = 160 + index * (SCR_WIDTH - 155) / 50;
+	Vector2 position = {x, 0.0f};
+	//float speed = GetRandomValue(1, 5);
+	//int weight = GetRandomValue(3, 10);
+	int speed = 5;
+	int weight = 5;
+	return (Target){10, weight, speed, position, color, false};
 }
 
 int gameUpdateOne(int state, Target *target)
 {
 	//If it's not playing. Don't Update
-	if (state != 1)
+	if (state != 1 || target->stopped == true)
 		return 0;
 
 	//Update Everything
 	int radius = target->radius;
-	int x = target->position.x;
-	int y = target->position.y;
-	int xspeed = target->speed.x;
-	int yspeed = target->speed.y;
-	x += xspeed;
+	float x = target->position.x;
+	float y = target->position.y;
+	float xspeed = target->speed;
+	float yspeed = target->speed;
+
+	//x += xspeed;
+	yspeed += target->weight * GetFrameTime();
 	y += yspeed;
+
 	//Collisions
 	if (x + radius > SCR_WIDTH)
 	{
@@ -43,18 +59,21 @@ int gameUpdateOne(int state, Target *target)
 	if (y + radius > SCR_HEIGHT)
 	{
 		y = SCR_HEIGHT - radius;
-		yspeed *= -1;
+		yspeed *= -0.8;
+
+		float tmp = abs(yspeed);
+		if (tmp <= 0.05f)
+			target->stopped = true;
 	}
 	else if (y - radius < 0)
 	{
 		y = radius;
-		yspeed *= -1;
+		yspeed *= -0.8;
 	}
 
 	//Giving it back
-	target->speed = (Vector2){xspeed, yspeed};
+	target->speed = yspeed;
 	target->position = (Vector2){x, y};
-
 	return 1;
 }
 
@@ -85,7 +104,7 @@ int gameDrawPause(int state)
 	return 0;
 }
 
-bool gameEnd()
+bool gameEndOne(Target *target)
 {
-	return false;
+	return target->stopped;
 }

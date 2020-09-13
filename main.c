@@ -2,6 +2,16 @@
 #include "button.h"
 #include "game.h"
 
+bool gameEnd(Target targets[])
+{
+	for (int i = 0; i < 50; i++)
+	{
+		if (!gameEndOne(&targets[i]))
+			return false;
+	}
+	return true;
+}
+
 int main()
 {
 	// Initialization //////////////////////////////////////////////
@@ -15,11 +25,15 @@ int main()
 	Button creditsOut = createButton(10, 150, 100, 50, MAROON, "CREDITS OUT");
 	Button *buttons[] = {&start, &creditsIn, &creditsOut};
 	int buttonsSize = 3;
+	int maxSize = 50;
+	int currentSize = 0;
+	int timer = 0;
+	int timerSize = 15;
 
 	Target targets[50];
 	for (int i = 0; i < 50; i++)
 	{
-		targets[i] = createTarget();
+		targets[i] = createTarget(i);
 	}
 
 	// Main Loop
@@ -41,7 +55,6 @@ int main()
 				if (g.credits > 0)
 				{
 					g.state = 1;
-					g.playing = true;
 					g.credits--;
 				}
 				break;
@@ -59,9 +72,32 @@ int main()
 			g.credits--;
 
 		//GameLogic
-		for (int i = 0; i < 50; i++)
+
+		if (g.state == 1 && currentSize < maxSize)
+		{
+			timer += 1;
+			if (timer >= timerSize)
+			{
+				currentSize++;
+				timer = 0.0f;
+			}
+		}
+
+		for (int i = 0; i < currentSize; i++)
 		{
 			gameUpdateOne(g.state, &targets[i]);
+		}
+
+		if (gameEnd(targets))
+		{
+			g.state = 0;
+			g.playNumber++;
+			currentSize = 0;
+			timer = 0;
+			for (int i = 0; i < maxSize; i++)
+			{
+				resetTarget(&targets[i]);
+			}
 		}
 
 		// Draw ////////////////////////////////////////////////////
@@ -75,15 +111,15 @@ int main()
 			buttonDraw(buttons[i]);
 		}
 		DrawText(TextFormat("%i", g.credits), 10, 500, 10, BLACK);
-		DrawText(TextFormat("%i", g.state), 0, 0, 10, BLACK);
 		//Game
-		for (int i = 0; i < 50; i++)
+		for (int i = 0; i < currentSize; i++)
 		{
 			gameDrawOne(g.state, &targets[i]);
 		}
-
 		gameDrawPause(g.state);
+
 		//DEBUG DRAWS
+		DrawText(TextFormat("%i", g.state), 0, 0, 20, BLACK);
 		//DrawLine(75 + SCR_WIDTH / 2, 0, 75 + SCR_WIDTH / 2, SCR_HEIGHT, PINK);
 		//DrawLine(0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, PINK);
 		EndDrawing();
