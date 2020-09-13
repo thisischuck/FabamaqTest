@@ -8,21 +8,26 @@ int main()
 	InitWindow(SCR_WIDTH, SCR_HEIGHT, "raylib");
 	SetTargetFPS(60); // Runs at 60 fps
 
-	Color c = BLACK;
 	Game g = createGame();
 
 	Button start = createButton(10, 50, 100, 50, BLUE, "START");
 	Button creditsIn = createButton(10, 100, 100, 50, GREEN, "CREDITS IN");
 	Button creditsOut = createButton(10, 150, 100, 50, MAROON, "CREDITS OUT");
-
 	Button *buttons[] = {&start, &creditsIn, &creditsOut};
 	int buttonsSize = 3;
+
+	Target targets[50];
+	for (int i = 0; i < 50; i++)
+	{
+		targets[i] = createTarget();
+	}
 
 	// Main Loop
 	while (!WindowShouldClose()) // Window close or ESC
 	{
 		// Update //////////////////////////////////////////////////
 		Vector2 mouse = GetMousePosition();
+
 		//ButtonLogic
 		for (int i = 0; i < buttonsSize; i++)
 		{
@@ -38,7 +43,6 @@ int main()
 					g.state = 1;
 					g.playing = true;
 					g.credits--;
-					gameInitialize();
 				}
 				break;
 			case 1:
@@ -55,10 +59,10 @@ int main()
 			g.credits--;
 
 		//GameLogic
-		gameUpdate(g.state);
-
-		if (gameEnd())
-			g.state = 0;
+		for (int i = 0; i < 50; i++)
+		{
+			gameUpdateOne(g.state, &targets[i]);
+		}
 
 		// Draw ////////////////////////////////////////////////////
 		BeginDrawing();
@@ -73,11 +77,15 @@ int main()
 		DrawText(TextFormat("%i", g.credits), 10, 500, 10, BLACK);
 		DrawText(TextFormat("%i", g.state), 0, 0, 10, BLACK);
 		//Game
-		gameDraw(g.state);
+		for (int i = 0; i < 50; i++)
+		{
+			gameDrawOne(g.state, &targets[i]);
+		}
 
+		gameDrawPause(g.state);
 		//DEBUG DRAWS
-		DrawLine(75 + SCR_WIDTH / 2, 0, 75 + SCR_WIDTH / 2, SCR_HEIGHT, PINK);
-		DrawLine(0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, PINK);
+		//DrawLine(75 + SCR_WIDTH / 2, 0, 75 + SCR_WIDTH / 2, SCR_HEIGHT, PINK);
+		//DrawLine(0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, PINK);
 		EndDrawing();
 	}
 

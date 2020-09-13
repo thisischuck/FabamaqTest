@@ -11,5 +11,6 @@
 #define SUCCESS 0
 #define PAUSEDCOLOR \
 	(Color) { 0, 0, 0, 100 }
-
+#define GAMEBOUNDS \
+	(Rectangle) { 155, 0, SCR_WIDTH - 155, SCR_HEIGHT }
 #endif

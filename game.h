@@ -11,11 +11,20 @@ typedef struct game
 	bool playing;
 } Game;
 
+typedef struct target
+{
+	int radius;
+	Vector2 speed;
+	Vector2 position;
+	Color color;
+} Target;
+
 Game createGame();
 
-int gameInitialize();
-int gameUpdate(int state);
-int gameDraw(int state);
+Target createTarget();
+int gameUpdateOne(int state, Target *target);
+int gameDrawOne(int state, Target *target);
+int gameDrawPause(int state);
 bool gameEnd();
 
 #endif
