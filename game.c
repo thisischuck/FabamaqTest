@@ -1,12 +1,14 @@
 #include "game.h"
 #include "stdlib.h"
 
+//Creates the data for the game
 Game createGame()
 {
 	Game g = {0, 0, 0, 0, 0, false};
 	return g;
 }
 
+//Resets one target to their original position
 int resetTarget(Target *target)
 {
 	target->position.y = 0;
@@ -15,10 +17,11 @@ int resetTarget(Target *target)
 	return 0;
 }
 
+//Creates one target
 Target createTarget(int index)
 {
 	Color color = {GetRandomValue(0, 255), GetRandomValue(0, 255), GetRandomValue(0, 255), 255};
-	float x = 160 + index * (SCR_WIDTH - 155) / 50;
+	float x = 160 + 5 + index * (SCR_WIDTH - 155) / 50;
 	Vector2 position = {x, 0.0f};
 	//float speed = GetRandomValue(1, 5);
 	//int weight = GetRandomValue(3, 10);
@@ -27,6 +30,7 @@ Target createTarget(int index)
 	return (Target){10, weight, speed, position, color, false};
 }
 
+//Updates one target
 int gameUpdateOne(int state, Target *target)
 {
 	//If it's not playing. Don't Update
@@ -77,18 +81,15 @@ int gameUpdateOne(int state, Target *target)
 	return 1;
 }
 
+//Draws one target
 int gameDrawOne(int state, Target *target)
 {
-	//If it's on the start don't draw.
-	//Needs to draw while paused
-	if (state == 0)
-		return 1;
-
 	DrawCircle(target->position.x, target->position.y, target->radius, target->color);
 
 	return 0;
 }
 
+//Draws the pause screen
 int gameDrawPause(int state)
 {
 	//Only draws when paused
@@ -104,11 +105,13 @@ int gameDrawPause(int state)
 	return 0;
 }
 
+//Checks if the target stopped
 bool gameEndOne(Target *target)
 {
 	return target->stopped;
 }
 
+//Checks if the game ended
 bool gameEnd(Target targets[], int size)
 {
 	for (int i = 0; i < size; i++)

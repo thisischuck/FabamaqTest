@@ -1,16 +1,19 @@
 #include "menu.h"
 #include "button.h"
-#
 
+//Centers the position of the text in a rectangle
 int centerPosition(Rectangle bounds, int fontSize, char *text)
 {
 	int textSize = MeasureText(text, fontSize);
 	return -textSize / 2 + bounds.width / 2;
 }
 
+//Draws the side menu
 int drawMenu(Game *g, Button *buttons[], int buttonsSize)
 {
-	DrawRectangle(0, 0, 150, 600, LIGHTGRAY);
+	Color color = LIGHTGRAY;
+	color.a *= 0.7f;
+	DrawRectangle(0, 0, 150, 600, color);
 	DrawRectangle(150, 0, 5, 600, BLACK); //Divider
 	for (int i = 0; i < buttonsSize; i++)
 	{
@@ -23,7 +26,7 @@ int drawMenu(Game *g, Button *buttons[], int buttonsSize)
 	DrawText(c, centerPosition(bounds, MENU_FONT_SIZE, c), 320, MENU_FONT_SIZE, BLACK);
 
 	TextCopy(c, "BUTTONS");
-	DrawText(c, centerPosition(bounds, MENU_FONT_SIZE, c), 20, MENU_FONT_SIZE, BLACK);
+	DrawText(c, centerPosition(bounds, MENU_FONT_SIZE, c), 30, MENU_FONT_SIZE, BLACK);
 	//CREDITS
 	TextCopy(c, "CREDITS:");
 	DrawText(c, centerPosition(bounds, 18, c), 400, 18, BLACK);

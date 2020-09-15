@@ -10,6 +10,7 @@ int main()
 	SetTargetFPS(60); // Runs at 60 fps
 
 	Game g = createGame();
+	Texture2D tex = LoadTexture("background.png");
 
 	Button start = createButton(25, 100, 100, 50, BLUE, "START");
 	Button creditsIn = createButton(25, 150, 100, 50, GREEN, "CREDITS IN");
@@ -27,7 +28,7 @@ int main()
 		targets[i] = createTarget(i);
 	}
 
-	// Main Loop
+	// Main Loop ///////////////////////////////////////////////////
 	while (!WindowShouldClose()) // Window close or ESC
 	{
 		// Update //////////////////////////////////////////////////
@@ -69,7 +70,6 @@ int main()
 		}
 
 		//GameLogic
-
 		//Interval Logic
 		if (g.state == 1 && currentSize < maxSize)
 		{
@@ -102,10 +102,12 @@ int main()
 		// Draw ////////////////////////////////////////////////////
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
+		//Background
+		DrawTexture(tex, 0, 0, WHITE);
 		//Menu
 		drawMenu(&g, buttons, buttonsSize);
 		//Game
-		for (int i = 0; i < currentSize; i++)
+		for (int i = 0; i < maxSize; i++)
 		{
 			gameDrawOne(g.state, &targets[i]);
 		}

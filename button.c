@@ -21,22 +21,20 @@ int buttonDraw(Button *a)
 
 	if (a->state == 2)
 	{
-		c.r += 20;
-		c.g += 20;
-		c.b += 20;
+		c.r *= 0.8;
+		c.g *= 0.8;
+		c.b *= 0.8;
 	}
-	else
-		c.a = 255;
 
 	DrawRectangle(a->rec.x, a->rec.y, a->rec.width, a->rec.height, c);
 	if (TextLength(a->text) > 0)
 	{
-		int textSize = MeasureText(a->text, MAIN_FONT_SIZE);
-		float x = -textSize / 2 + a->rec.x + a->rec.width / 2;
-		float y = -MAIN_FONT_SIZE / 2 + a->rec.y + a->rec.height / 2;
 		Color c = BLACK;
 		if (a->state == 1)
 			c = WHITE;
+		int textSize = MeasureText(a->text, MAIN_FONT_SIZE);
+		float x = -textSize / 2 + a->rec.x + a->rec.width / 2;
+		float y = -MAIN_FONT_SIZE / 2 + a->rec.y + a->rec.height / 2;
 		DrawText(a->text, x, y, MAIN_FONT_SIZE, c);
 	}
 
@@ -49,6 +47,7 @@ bool mouseOnButton(Vector2 mousePosition, Button *b)
 	return CheckCollisionPointRec(mousePosition, b->rec);
 }
 
+//Updates one button
 int buttonUpdate(Button *b, Vector2 mousePosition)
 {
 	b->activate = false;
