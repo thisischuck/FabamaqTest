@@ -116,7 +116,7 @@ int main()
 		//DEBUG DRAWS
 		//DrawText(TextFormat("%i", g.state), 0, 0, 20, BLACK);
 		//DrawLine(75 + SCR_WIDTH / 2, 0, 75 + SCR_WIDTH / 2, SCR_HEIGHT, PINK);
-		DrawLine(0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, PINK);
+		//DrawLine(0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, PINK);
 		EndDrawing();
 	}
 
