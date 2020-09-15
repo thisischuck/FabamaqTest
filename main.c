@@ -11,9 +11,9 @@ int main()
 
 	Game g = createGame();
 
-	Button start = createButton(10, 50, 100, 50, BLUE, "START");
-	Button creditsIn = createButton(10, 100, 100, 50, GREEN, "CREDITS IN");
-	Button creditsOut = createButton(10, 150, 100, 50, MAROON, "CREDITS OUT");
+	Button start = createButton(25, 100, 100, 50, BLUE, "START");
+	Button creditsIn = createButton(25, 150, 100, 50, GREEN, "CREDITS IN");
+	Button creditsOut = createButton(25, 200, 100, 50, MAROON, "CREDITS OUT");
 	Button *buttons[] = {&start, &creditsIn, &creditsOut};
 	int buttonsSize = 3;
 	int maxSize = 50;
@@ -114,7 +114,7 @@ int main()
 		//DEBUG DRAWS
 		//DrawText(TextFormat("%i", g.state), 0, 0, 20, BLACK);
 		//DrawLine(75 + SCR_WIDTH / 2, 0, 75 + SCR_WIDTH / 2, SCR_HEIGHT, PINK);
-		//DrawLine(0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, PINK);
+		DrawLine(0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, PINK);
 		EndDrawing();
 	}
 

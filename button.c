@@ -17,17 +17,27 @@ Button createButton(int x, int y, int width, int height, Color c, char text[])
 //Draws the button text in the middle of the button
 int buttonDraw(Button *a)
 {
-	DrawRectangle(a->rec.x, a->rec.y, a->rec.width, a->rec.height, a->c);
+	Color c = a->c;
+
+	if (a->state == 2)
+	{
+		c.r += 20;
+		c.g += 20;
+		c.b += 20;
+	}
+	else
+		c.a = 255;
+
+	DrawRectangle(a->rec.x, a->rec.y, a->rec.width, a->rec.height, c);
 	if (TextLength(a->text) > 0)
 	{
 		int textSize = MeasureText(a->text, MAIN_FONT_SIZE);
 		float x = -textSize / 2 + a->rec.x + a->rec.width / 2;
 		float y = -MAIN_FONT_SIZE / 2 + a->rec.y + a->rec.height / 2;
-		DrawText(a->text, x, y, MAIN_FONT_SIZE, BLACK);
-	}
-	else
-	{
-		DrawText("NONE", 0, 0, MAIN_FONT_SIZE, BLACK);
+		Color c = BLACK;
+		if (a->state == 1)
+			c = WHITE;
+		DrawText(a->text, x, y, MAIN_FONT_SIZE, c);
 	}
 
 	return 0;

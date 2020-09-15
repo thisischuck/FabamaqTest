@@ -20,7 +20,10 @@ int drawMenu(Game *g, Button *buttons[], int buttonsSize)
 	Rectangle bounds = {0, 0, 150, 600};
 	char c[20] = "INFO";
 	//INFO
-	DrawText(c, centerPosition(bounds, TITLE_FONT_SIZE, c), 320, TITLE_FONT_SIZE, BLACK);
+	DrawText(c, centerPosition(bounds, MENU_FONT_SIZE, c), 320, MENU_FONT_SIZE, BLACK);
+
+	TextCopy(c, "BUTTONS");
+	DrawText(c, centerPosition(bounds, MENU_FONT_SIZE, c), 20, MENU_FONT_SIZE, BLACK);
 	//CREDITS
 	TextCopy(c, "CREDITS:");
 	DrawText(c, centerPosition(bounds, 18, c), 400, 18, BLACK);
@@ -29,7 +32,7 @@ int drawMenu(Game *g, Button *buttons[], int buttonsSize)
 	//Num PLAYS
 	TextCopy(c, "N PLAYS:");
 	DrawText(c, centerPosition(bounds, 18, c), 440, 18, BLACK);
-	TextCopy(c, TextFormat("%i", g->playing));
+	TextCopy(c, TextFormat("%i", g->playNumber));
 	DrawText(c, centerPosition(bounds, 18, c), 460, 18, BLACK);
 	//CREDITS IN
 	TextCopy(c, "CREDITS IN:");
