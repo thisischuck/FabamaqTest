@@ -22,7 +22,7 @@ int buttonDraw(Button *a)
 	{
 		int textSize = MeasureText(a->text, MAIN_FONT_SIZE);
 		float x = -textSize / 2 + a->rec.x + a->rec.width / 2;
-		float y = -MAIN_FONT_SIZE + a->rec.y + a->rec.height / 2;
+		float y = -MAIN_FONT_SIZE / 2 + a->rec.y + a->rec.height / 2;
 		DrawText(a->text, x, y, MAIN_FONT_SIZE, BLACK);
 	}
 	else

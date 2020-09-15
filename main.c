@@ -1,6 +1,7 @@
 #include "main.h"
 #include "button.h"
 #include "game.h"
+#include "menu.h"
 
 int main()
 {
@@ -57,9 +58,15 @@ int main()
 			}
 		}
 		if (creditsIn.activate)
+		{
 			g.credits++;
+			g.creditsIn++;
+		}
 		if (creditsOut.activate && g.credits > 0)
+		{
+			g.creditsOut++;
 			g.credits--;
+		}
 
 		//GameLogic
 
@@ -96,13 +103,7 @@ int main()
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 		//Menu
-		DrawRectangle(0, 0, 150, 600, LIGHTGRAY);
-		DrawRectangle(150, 0, 5, 600, BLACK);
-		for (int i = 0; i < buttonsSize; i++)
-		{
-			buttonDraw(buttons[i]);
-		}
-		DrawText(TextFormat("%i", g.credits), 10, 500, 10, BLACK);
+		drawMenu(&g, buttons, buttonsSize);
 		//Game
 		for (int i = 0; i < currentSize; i++)
 		{
@@ -111,7 +112,7 @@ int main()
 		gameDrawPause(g.state);
 
 		//DEBUG DRAWS
-		DrawText(TextFormat("%i", g.state), 0, 0, 20, BLACK);
+		//DrawText(TextFormat("%i", g.state), 0, 0, 20, BLACK);
 		//DrawLine(75 + SCR_WIDTH / 2, 0, 75 + SCR_WIDTH / 2, SCR_HEIGHT, PINK);
 		//DrawLine(0, SCR_HEIGHT / 2, SCR_WIDTH, SCR_HEIGHT / 2, PINK);
 		EndDrawing();

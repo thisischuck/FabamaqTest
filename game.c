@@ -3,7 +3,7 @@
 
 Game createGame()
 {
-	Game g = {0, 0, 0, false};
+	Game g = {0, 0, 0, 0, 0, false};
 	return g;
 }
 
@@ -97,7 +97,7 @@ int gameDrawPause(int state)
 		DrawRectangle(155, 0, SCR_WIDTH - 155, SCR_HEIGHT, PAUSEDCOLOR);
 		int textSize = MeasureText("PAUSED", TITLE_FONT_SIZE);
 		float x = -textSize / 2 + 75 + SCR_WIDTH / 2;
-		float y = -TITLE_FONT_SIZE + SCR_HEIGHT / 2;
+		float y = -TITLE_FONT_SIZE / 2 + SCR_HEIGHT / 2;
 		DrawText("PAUSED", x, y, TITLE_FONT_SIZE, BLACK);
 	}
 

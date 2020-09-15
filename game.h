@@ -3,24 +3,6 @@
 
 #include "main.h"
 
-typedef struct game
-{
-	int credits;
-	int state; //0 start, 1 Playing, 2 Paused
-	int playNumber;
-	bool playing;
-} Game;
-
-typedef struct target
-{
-	int radius;
-	int weight;
-	float speed;
-	Vector2 position;
-	Color color;
-	bool stopped;
-} Target;
-
 Game createGame();
 
 Target createTarget(int index);
